@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dasbor LTQ</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+
+    <!-- PWA Manifest and Themeing -->
+    <meta name="theme-color" content="#3b82f6">
+    <link rel="apple-touch-icon" href="https://placehold.co/180x180/3b82f6/ffffff?text=LTQ">
+    <link rel="manifest" href="data:application/manifest+json;base64,ew0KICAibmFtZSI6ICJEYXNib3IgTFRRIiwNCiAgInNob3J0X25hbWUiOiAiTFRRIiwNCiAgImljb25zIjogWw0KICAgIHsNCiAgICAgICJzcmMiOiAiaHR0cHM6Ly9wbGFjZWhvbGQuY28vMTkyeDE5Mi8zYjgyZjYvZmZmZmZmP3RleHQ9TFRRIiwNCiAgICAgICJ0eXBlIjogImltYWdlL3BuZyIsDQogICAgICAic2l6ZXMiOiAiMTkyeDE5MiINCiAgICB9LA0KICAgIHsNCiAgICAgICJzcmMiOiAiaHR0cHM6Ly9wbGFjZWhvbGQuY28vNTEyeDUxMi8zYjgyZjYvZmZmZmZmP3RleHQ9TFRRIiwNCiAgICAgICJ0eXBlIjogImltYWdlL3BuZyIsDQogICAgICAic2l6ZXMiOiAiNTEyeDUxMiINCiAgICB9DQogIF0sDQogICJzdGFydF91cmwiOiAiLiIsDQogICJkaXNwbGF5IjogInN0YW5kYWxvbmUiLA0KICAiYmFja2dyb3VuZF9jb2xvciI6ICIjMWYyOTM3IiwNCiAgInRoZW1lX2NvbG9yIjogIiMzYjgyZjYiDQp9">
+
+    <style>
+        /* Custom styles */
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Style for the active menu item */
+        .sidebar-link.active {
+            background-color: #3b82f6; /* bg-blue-600 */
+            color: white;
+        }
+        .sidebar-link.active svg {
+            color: white;
+        }
+        /* Smooth transition for iframe loading */
+        iframe {
+            transition: opacity 0.3s ease-in-out;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 dark:bg-gray-900">
+    <div class="flex h-screen">
+        <!-- Sidebar -->
+        <aside class="w-64 flex-shrink-0 bg-gray-800 text-gray-300 flex flex-col">
+            <!-- Sidebar Header -->
+            <div class="h-16 flex items-center justify-center px-4 border-b border-gray-700">
+                 <div class="flex items-center space-x-3">
+                    <div class="p-2 bg-blue-600 rounded-lg">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
+                    </div>
+                    <h1 class="text-xl font-bold text-white">Dasbor LTQ</h1>
+                </div>
+            </div>
+            <!-- Navigation Links -->
+            <nav class="flex-1 px-2 py-4 space-y-2">
+                <a href="#" class="sidebar-link flex items-center px-4 py-2.5 rounded-lg transition-colors duration-200 hover:bg-gray-700 active" data-src="https://panel-admin-santri-ltq.vercel.app/">
+                    <i data-lucide="shield" class="mr-3 h-5 w-5"></i>
+                    Admin Santri
+                </a>
+                <a href="#" class="sidebar-link flex items-center px-4 py-2.5 rounded-lg transition-colors duration-200 hover:bg-gray-700" data-src="https://panel-admin-pembimbing-ltq.vercel.app/">
+                     <i data-lucide="user-cog" class="mr-3 h-5 w-5"></i>
+                    Admin Pembimbing
+                </a>
+                <a href="#" class="sidebar-link flex items-center px-4 py-2.5 rounded-lg transition-colors duration-200 hover:bg-gray-700" data-src="https://absensi-rekap-pembimbing-ltq.vercel.app/">
+                    <i data-lucide="bar-chart-3" class="mr-3 h-5 w-5"></i>
+                    Rekap Pembimbing
+                </a>
+                <a href="#" class="sidebar-link flex items-center px-4 py-2.5 rounded-lg transition-colors duration-200 hover:bg-gray-700" data-src="https://rekapitulasi-santri-ltq.vercel.app/">
+                    <i data-lucide="bar-chart-horizontal" class="mr-3 h-5 w-5"></i>
+                    Rekap Santri
+                </a>
+                <a href="#" class="sidebar-link flex items-center px-4 py-2.5 rounded-lg transition-colors duration-200 hover:bg-gray-700" data-src="https://impor-data-massal-ltq.vercel.app/">
+                    <i data-lucide="upload-cloud" class="mr-3 h-5 w-5"></i>
+                    Impor Data Massal
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 flex flex-col">
+            <div id="loader" class="flex items-center justify-center h-full">
+                <div class="text-center">
+                    <svg class="animate-spin h-10 w-10 text-blue-600 mx-auto" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    <p class="mt-2 text-gray-500">Memuat halaman...</p>
+                </div>
+            </div>
+            <iframe id="content-frame" class="w-full h-full border-0" style="opacity: 0;" allowfullscreen></iframe>
+        </main>
+    </div>
+
+    <script>
+        // Using window.onload ensures that all resources, including the external lucide.js script,
+        // are fully loaded and parsed before the script runs.
+        window.onload = function() {
+            const links = document.querySelectorAll('.sidebar-link');
+            const contentFrame = document.getElementById('content-frame');
+            const loader = document.getElementById('loader');
+
+            // Function to switch tabs
+            function switchTab(linkElement) {
+                // Show loader and hide iframe
+                loader.style.display = 'flex';
+                contentFrame.style.opacity = '0';
+
+                // Remove active class from all links
+                links.forEach(l => l.classList.remove('active'));
+                
+                // Add active class to the clicked link
+                linkElement.classList.add('active');
+                
+                // Get the URL from data-src attribute
+                const url = linkElement.getAttribute('data-src');
+                
+                // Set iframe src
+                contentFrame.src = url;
+            }
+
+            // Add click event listeners to all sidebar links
+            links.forEach(link => {
+                link.addEventListener('click', function(event) {
+                    event.preventDefault(); // Prevent default link behavior
+                    switchTab(this);
+                });
+            });
+            
+            // Handle iframe load event
+            contentFrame.addEventListener('load', function() {
+                // Hide loader and show iframe
+                loader.style.display = 'none';
+                contentFrame.style.opacity = '1';
+            });
+
+            // Initially load the first link's content
+            const initialLink = document.querySelector('.sidebar-link.active');
+            if (initialLink) {
+                switchTab(initialLink);
+            }
+
+            // Create Lucide icons. This is now safe to call.
+            lucide.createIcons();
+        };
+
+        // --- PWA Service Worker Registration ---
+        // For full offline functionality, create a file named 'sw.js' in the same directory
+        // as this HTML file and paste the service worker code into it.
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js').then(registration => {
+                    console.log('ServiceWorker registration successful with scope: ', registration.scope);
+                }, err => {
+                    console.log('ServiceWorker registration failed: ', err);
+                });
+            });
+        }
+        /*
+        --- KONTEN UNTUK FILE sw.js ---
+        
+        const CACHE_NAME = 'dasbor-ltq-cache-v1';
+        // Tambahkan URL dari aset yang ingin Anda cache di sini
+        const urlsToCache = [
+          '.', // Ini akan meng-cache file HTML utama
+        ];
+
+        self.addEventListener('install', event => {
+          event.waitUntil(
+            caches.open(CACHE_NAME)
+              .then(cache => {
+                console.log('Cache dibuka');
+                return cache.addAll(urlsToCache);
+              })
+          );
+        });
+
+        self.addEventListener('fetch', event => {
+          event.respondWith(
+            caches.match(event.request)
+              .then(response => {
+                if (response) {
+                  return response; // Mengembalikan dari cache jika ada
+                }
+                return fetch(event.request); // Jika tidak, ambil dari jaringan
+              }
+            )
+          );
+        });
+        */
+    </script>
+</body>
+</html>
