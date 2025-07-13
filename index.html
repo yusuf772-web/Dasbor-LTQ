@@ -19,7 +19,27 @@
         body {
             font-family: 'Inter', sans-serif;
         }
-        /* Style for the active menu item */
+        #sidebar {
+            transition: width 0.3s ease-in-out;
+        }
+        #sidebar.collapsed {
+            width: 5rem; /* 80px */
+        }
+        #sidebar.collapsed .menu-text,
+        #sidebar.collapsed .sidebar-header-text {
+            display: none;
+        }
+        #sidebar.collapsed .sidebar-header-icon {
+            margin: 0 auto;
+        }
+        #sidebar.collapsed .sidebar-link,
+        #sidebar.collapsed #sidebar-toggle {
+            justify-content: center;
+        }
+        #sidebar.collapsed .sidebar-link i,
+        #sidebar.collapsed #sidebar-toggle i {
+            margin-right: 0;
+        }
         .sidebar-link.active {
             background-color: #3b82f6; /* bg-blue-600 */
             color: white;
@@ -27,7 +47,6 @@
         .sidebar-link.active svg {
             color: white;
         }
-        /* Smooth transition for iframe loading */
         iframe {
             transition: opacity 0.3s ease-in-out;
         }
@@ -36,39 +55,46 @@
 <body class="bg-gray-100 dark:bg-gray-900">
     <div class="flex h-screen">
         <!-- Sidebar -->
-        <aside class="w-64 flex-shrink-0 bg-gray-800 text-gray-300 flex flex-col">
+        <aside id="sidebar" class="w-64 flex-shrink-0 bg-gray-800 text-gray-300 flex flex-col">
             <!-- Sidebar Header -->
             <div class="h-16 flex items-center justify-center px-4 border-b border-gray-700">
                  <div class="flex items-center space-x-3">
-                    <div class="p-2 bg-blue-600 rounded-lg">
+                    <div class="p-2 bg-blue-600 rounded-lg sidebar-header-icon">
                         <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
                     </div>
-                    <h1 class="text-xl font-bold text-white">Dasbor LTQ</h1>
+                    <h1 class="text-xl font-bold text-white sidebar-header-text">Dasbor LTQ</h1>
                 </div>
             </div>
             <!-- Navigation Links -->
             <nav class="flex-1 px-2 py-4 space-y-2">
                 <a href="#" class="sidebar-link flex items-center px-4 py-2.5 rounded-lg transition-colors duration-200 hover:bg-gray-700 active" data-src="https://panel-admin-santri-ltq.vercel.app/">
                     <i data-lucide="shield" class="mr-3 h-5 w-5"></i>
-                    Admin Santri
+                    <span class="menu-text">Admin Santri</span>
                 </a>
                 <a href="#" class="sidebar-link flex items-center px-4 py-2.5 rounded-lg transition-colors duration-200 hover:bg-gray-700" data-src="https://panel-admin-pembimbing-ltq.vercel.app/">
                      <i data-lucide="user-cog" class="mr-3 h-5 w-5"></i>
-                    Admin Pembimbing
+                     <span class="menu-text">Admin Pembimbing</span>
                 </a>
                 <a href="#" class="sidebar-link flex items-center px-4 py-2.5 rounded-lg transition-colors duration-200 hover:bg-gray-700" data-src="https://absensi-rekap-pembimbing-ltq.vercel.app/">
                     <i data-lucide="bar-chart-3" class="mr-3 h-5 w-5"></i>
-                    Rekap Pembimbing
+                    <span class="menu-text">Rekap Pembimbing</span>
                 </a>
                 <a href="#" class="sidebar-link flex items-center px-4 py-2.5 rounded-lg transition-colors duration-200 hover:bg-gray-700" data-src="https://rekapitulasi-santri-ltq.vercel.app/">
                     <i data-lucide="bar-chart-horizontal" class="mr-3 h-5 w-5"></i>
-                    Rekap Santri
+                    <span class="menu-text">Rekap Santri</span>
                 </a>
                 <a href="#" class="sidebar-link flex items-center px-4 py-2.5 rounded-lg transition-colors duration-200 hover:bg-gray-700" data-src="https://impor-data-massal-ltq.vercel.app/">
                     <i data-lucide="upload-cloud" class="mr-3 h-5 w-5"></i>
-                    Impor Data Massal
+                    <span class="menu-text">Impor Data Massal</span>
                 </a>
             </nav>
+            <!-- Sidebar Toggle -->
+            <div class="px-2 py-2 border-t border-gray-700">
+                <button id="sidebar-toggle" class="w-full flex items-center p-2.5 rounded-lg transition-colors duration-200 hover:bg-gray-700">
+                    <i data-lucide="chevrons-left" class="h-5 w-5 mr-3"></i>
+                    <span class="menu-text">Kecilkan</span>
+                </button>
+            </div>
         </aside>
 
         <!-- Main Content -->
@@ -87,60 +113,67 @@
     </div>
 
     <script>
-        // Using window.onload ensures that all resources, including the external lucide.js script,
-        // are fully loaded and parsed before the script runs.
         window.onload = function() {
             const links = document.querySelectorAll('.sidebar-link');
             const contentFrame = document.getElementById('content-frame');
             const loader = document.getElementById('loader');
+            const sidebar = document.getElementById('sidebar');
+            const sidebarToggle = document.getElementById('sidebar-toggle');
+            const toggleIcon = sidebarToggle.querySelector('i');
+            const toggleText = sidebarToggle.querySelector('.menu-text');
 
-            // Function to switch tabs
             function switchTab(linkElement) {
-                // Show loader and hide iframe
                 loader.style.display = 'flex';
                 contentFrame.style.opacity = '0';
-
-                // Remove active class from all links
                 links.forEach(l => l.classList.remove('active'));
-                
-                // Add active class to the clicked link
                 linkElement.classList.add('active');
-                
-                // Get the URL from data-src attribute
                 const url = linkElement.getAttribute('data-src');
-                
-                // Set iframe src
                 contentFrame.src = url;
             }
 
-            // Add click event listeners to all sidebar links
             links.forEach(link => {
                 link.addEventListener('click', function(event) {
-                    event.preventDefault(); // Prevent default link behavior
+                    event.preventDefault();
                     switchTab(this);
                 });
             });
             
-            // Handle iframe load event
             contentFrame.addEventListener('load', function() {
-                // Hide loader and show iframe
                 loader.style.display = 'none';
                 contentFrame.style.opacity = '1';
             });
 
-            // Initially load the first link's content
+            function setSidebarState(isCollapsed) {
+                if (isCollapsed) {
+                    sidebar.classList.add('collapsed');
+                    toggleIcon.setAttribute('data-lucide', 'chevrons-right');
+                    toggleText.textContent = 'Besarkan';
+                } else {
+                    sidebar.classList.remove('collapsed');
+                    toggleIcon.setAttribute('data-lucide', 'chevrons-left');
+                    toggleText.textContent = 'Kecilkan';
+                }
+                lucide.createIcons();
+            }
+
+            sidebarToggle.addEventListener('click', () => {
+                const isCollapsed = !sidebar.classList.contains('collapsed');
+                setSidebarState(isCollapsed);
+                localStorage.setItem('sidebarCollapsed', isCollapsed);
+            });
+
             const initialLink = document.querySelector('.sidebar-link.active');
             if (initialLink) {
                 switchTab(initialLink);
             }
-
-            // Create Lucide icons. This is now safe to call.
-            lucide.createIcons();
+            
+            if (localStorage.getItem('sidebarCollapsed') === 'true') {
+                setSidebarState(true);
+            } else {
+                setSidebarState(false);
+            }
         };
 
-        // --- PWA Service Worker Registration ---
-        // For full offline functionality, create a file named 'sw.js' in the same directory
-        // as this HTML file and paste the service worker code into it.
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('/sw.js').then(registration => {
@@ -150,38 +183,6 @@
                 });
             });
         }
-        /*
-        --- KONTEN UNTUK FILE sw.js ---
-        
-        const CACHE_NAME = 'dasbor-ltq-cache-v1';
-        // Tambahkan URL dari aset yang ingin Anda cache di sini
-        const urlsToCache = [
-          '.', // Ini akan meng-cache file HTML utama
-        ];
-
-        self.addEventListener('install', event => {
-          event.waitUntil(
-            caches.open(CACHE_NAME)
-              .then(cache => {
-                console.log('Cache dibuka');
-                return cache.addAll(urlsToCache);
-              })
-          );
-        });
-
-        self.addEventListener('fetch', event => {
-          event.respondWith(
-            caches.match(event.request)
-              .then(response => {
-                if (response) {
-                  return response; // Mengembalikan dari cache jika ada
-                }
-                return fetch(event.request); // Jika tidak, ambil dari jaringan
-              }
-            )
-          );
-        });
-        */
     </script>
 </body>
 </html>
