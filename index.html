@@ -15,7 +15,7 @@
     <meta name="apple-mobile-web-app-title" content="Data Santri">
     
     <!-- Apple Touch Icon (URL Ikon Baru) -->
-    <link rel="apple-touch-icon" href="https://www.hidayatunnajah.or.id/wp-content/uploads/2025/07/WhatsApp-Image-2025-07-19-at-16.30.33.jpeg">
+    <link rel="apple-touch-icon" href="https://www.hidayatunnajah.or.id/wp-content/uploads/2025/07/WhatsApp-Image-2025-07-19-at-16.30.33.jpeg" onerror="this.onerror=null;this.src='https://placehold.co/180x180/1f2937/ffffff?text=Icon';">
 
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -97,7 +97,8 @@
                     <p class="mt-2 text-gray-500">Memuat halaman...</p>
                 </div>
             </div>
-            <iframe id="content-frame" class="w-full h-full border-0" style="opacity: 0;" allowfullscreen></iframe>
+            <!-- FIX: Added the sandbox attribute to the iframe -->
+            <iframe id="content-frame" class="w-full h-full border-0" style="opacity: 0;" allowfullscreen sandbox="allow-scripts allow-forms allow-same-origin allow-modals allow-popups"></iframe>
         </main>
     </div>
 
