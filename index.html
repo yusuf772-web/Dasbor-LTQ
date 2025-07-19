@@ -97,8 +97,8 @@
                     <p class="mt-2 text-gray-500">Memuat halaman...</p>
                 </div>
             </div>
-            <!-- FIX: Added the sandbox attribute to the iframe -->
-            <iframe id="content-frame" class="w-full h-full border-0" style="opacity: 0;" allowfullscreen sandbox="allow-scripts allow-forms allow-same-origin allow-modals allow-popups"></iframe>
+            <!-- Added sandbox and allow attributes for better compatibility -->
+            <iframe id="content-frame" class="w-full h-full border-0" style="opacity: 0;" allowfullscreen sandbox="allow-scripts allow-forms allow-same-origin allow-modals allow-popups" allow="clipboard-write"></iframe>
         </main>
     </div>
 
@@ -115,10 +115,8 @@
                 loader.style.display = 'flex';
                 contentFrame.style.opacity = '0';
                 
-                // Remove active class from all menu links
                 menuLinks.forEach(l => l.classList.remove('active'));
                 
-                // Find and add active class to corresponding links (desktop and mobile)
                 const dataSrc = linkElement.getAttribute('data-src');
                 document.querySelectorAll(`.top-menu-link[data-src="${dataSrc}"]`).forEach(activeLink => {
                     activeLink.classList.add('active');
@@ -127,7 +125,10 @@
                 const url = linkElement.getAttribute('data-src');
                 contentFrame.src = url;
 
-                // Close mobile menu after selection
+                // FIX: Explicitly set focus to the iframe after changing its source
+                // This can help signal to the mobile OS that the user is interacting with it.
+                contentFrame.focus();
+
                 if (!mobileMenu.classList.contains('hidden')) {
                     mobileMenu.classList.add('hidden');
                     mobileMenuIcon.setAttribute('data-lucide', 'menu');
@@ -145,22 +146,21 @@
             contentFrame.addEventListener('load', function() {
                 loader.style.display = 'none';
                 contentFrame.style.opacity = '1';
+                // FIX: Also try to set focus after the content has loaded
+                contentFrame.focus();
             });
 
-            // Toggle mobile menu
             mobileMenuButton.addEventListener('click', () => {
                 const isHidden = mobileMenu.classList.toggle('hidden');
                 mobileMenuIcon.setAttribute('data-lucide', isHidden ? 'menu' : 'x');
                 lucide.createIcons();
             });
 
-            // Load initial content
             const initialLink = document.querySelector('.top-menu-link.active');
             if (initialLink) {
                 switchTab(initialLink);
             }
 
-            // Create all icons
             lucide.createIcons();
         };
 
